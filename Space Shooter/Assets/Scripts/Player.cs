@@ -4,29 +4,58 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    //publica o privada
-    //int float bool string
-    //nombre variable
-    //valor
     [SerializeField]
-    private float speed;
+    private float _speed;
+    [SerializeField]
+    private GameObject _laser;
 
     void Start()
     {
         transform.position = new Vector3(0, 0, 0);
     }
 
-    // Update is called once per frame
     void Update()
     {
         Movimiento();
+        Limites();
+        Disparo();
     }
 
     void Movimiento()
     {
-        //new Vector3(1,0,0)
-        //new Vector3(0,1,0)
-        transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * speed * Time.deltaTime);
-        transform.Translate(Vector3.up *Input.GetAxis("Vertical") * speed * Time.deltaTime);
+        //Direccion
+        float horizontal = Input.GetAxis("Horizontal");
+        float Vertical = Input.GetAxis("Vertical");
+
+        Vector3 movimiento = new Vector3(horizontal, Vertical, 0);
+
+        transform.Translate(movimiento *  _speed * Time.deltaTime);
+    }
+
+    void Limites()
+    {
+        if (transform.position.y > 5.7f)
+        {
+            transform.position = new Vector3(transform.position.x, 5.7f, 0);
+        }else if(transform.position.y < -3.8f)
+        {
+            transform.position = new Vector3(transform.position.x, -3.8f, 0);
+        }
+
+        if (transform.position.x > 9.7f)
+        {
+            transform.position = new Vector3(-9.7f, transform.position.y, 0);
+        }else if (transform.position.x < -9.7f)
+        {
+            transform.position = new Vector3(9.7f, transform.position.y, 0);
+        }
+    }
+
+    void Disparo()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Instantiate(_laser);
+        }
     }
 }
