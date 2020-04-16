@@ -8,6 +8,8 @@ public class Player : MonoBehaviour
     private float _speed;
     [SerializeField]
     private GameObject _laser;
+    private float _fireRate = 0.5f;
+    private float _canFire = -1;
 
     void Start()
     {
@@ -53,9 +55,10 @@ public class Player : MonoBehaviour
 
     void Disparo()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
         {
-            Instantiate(_laser);
+            _canFire = Time.time + _fireRate;
+            Instantiate(_laser, transform.position + new Vector3(0, 0.8f, 0), Quaternion.identity);
         }
     }
 }
