@@ -12,9 +12,15 @@ public class Player : MonoBehaviour
     private float _canFire = -1;
     [SerializeField]
     private float _lifes = 3f;
+    private Spawn_Manager _spawnManager;
     void Start()
     {
         transform.position = new Vector3(0, 0, 0);
+        _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<Spawn_Manager>();
+        if (_spawnManager == null)
+        {
+            Debug.Log("No se encontró SpawnManager");
+        }
     }
 
     void Update()
@@ -66,10 +72,12 @@ public class Player : MonoBehaviour
     public void LifeSistem()
     {
         _lifes --;
+        Debug.Log(_lifes);
 
         if (_lifes < 1)
         {
             Destroy(gameObject);
+            _spawnManager.StopSpawn();
         }
     }
 }
