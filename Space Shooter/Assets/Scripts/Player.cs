@@ -8,11 +8,16 @@ public class Player : MonoBehaviour
     private float _speed;
     [SerializeField]
     private GameObject _laser;
-    private float _fireRate = 0.5f;
+    [SerializeField]
+    private GameObject _laserTriple;
+    private float _fireRate = 0.2f;
     private float _canFire = -1;
     [SerializeField]
     private float _lifes = 3f;
     private Spawn_Manager _spawnManager;
+
+    [SerializeField]
+    private bool _tripleShotActive = false;
     void Start()
     {
         transform.position = new Vector3(0, 0, 0);
@@ -65,8 +70,22 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
         {
             _canFire = Time.time + _fireRate;
-            Instantiate(_laser, transform.position + new Vector3(0, 1.1f, 0), Quaternion.identity);
+
+            if (_tripleShotActive == true)
+            {
+                Instantiate(_laserTriple, transform.position, Quaternion.identity);
+            }
+            else
+            {
+                Instantiate(_laser, transform.position + new Vector3(0, 1.1f, 0), Quaternion.identity);
+            }
         }
+    }
+
+    public void TripleShot()
+    {
+        _tripleShotActive =  true;
+        StartCoroutine(PowerUpRoutine());
     }
 
     public void LifeSistem()
@@ -79,5 +98,11 @@ public class Player : MonoBehaviour
             Destroy(gameObject);
             _spawnManager.StopSpawn();
         }
+    }
+
+    IEnumerator PowerUpRoutine()
+    {
+        yield return new WaitForSeconds(5f);
+        _tripleShotActive = false;
     }
 }

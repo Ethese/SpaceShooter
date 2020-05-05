@@ -180,7 +180,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 10
   _laser: {fileID: 4114478187448537558, guid: 17ce49325f8adf844b42dddfcdc286e2, type: 3}
+  _laserTriple: {fileID: 5822916330079397321, guid: 405b2383ae5f3b64c99c25b03e3affdb,
+    type: 3}
   _lifes: 3
+  _tripleShotActive: 0
 --- !u!212 &479256685
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -441,6 +444,8 @@ MonoBehaviour:
   _enemyPrefab: {fileID: 3689075010843785488, guid: 6fd6cad0998960748b81bc6e9b9828a0,
     type: 3}
   _enemyContainer: {fileID: 2130306691}
+  _tripleShotPrefab: {fileID: 798058507365057177, guid: fcc1099928856804f8b42663370fa1f8,
+    type: 3}
 --- !u!4 &1918218510
 Transform:
   m_ObjectHideFlags: 0
